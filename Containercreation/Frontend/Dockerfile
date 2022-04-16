@@ -1,14 +1,18 @@
 FROM golang:1.18 as buildstage
 
 WORKDIR /go/src
+
 COPY main.go .
 
 RUN go mod init backend && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o Backend .
 
 FROM alpine:latest  
-WORKDIR /
+
+WORKDIR /tmp
+
 COPY --from=buildstage /go/src/Backend ./
+
 RUN chmod +x Backend
 
 CMD ["./Backend"] 
