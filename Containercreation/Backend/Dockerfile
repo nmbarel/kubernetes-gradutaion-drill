@@ -1,10 +1,15 @@
-FROM centos as buildstage
+FROM golang:1.18 as buildstage
 
-ADD Backend /
-RUN chmod +x /Backend
+WORKDIR /go/src
 
-FROM scratch
+COPY main.go .
 
-COPY  --from=buildstage Backend /
+RUN go mod init Frontend &&  \
+    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o Frontend .
 
-CMD ["/Backend"]
+FROM alpine:latest  
+WORKDIR /tmp
+COPY --from=buildstage /go/src/Frontend .
+RUN chmod +x Frontend
+
+ENTRYPOINT ["./Frontend"]  
