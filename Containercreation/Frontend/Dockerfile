@@ -4,15 +4,15 @@ WORKDIR /go/src
 
 COPY main.go .
 
-RUN go mod init backend && \
-    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o Backend .
+RUN go mod init Frontend && \
+    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o Frontend .
 
 FROM alpine:latest  
 
 WORKDIR /tmp
 
-COPY --from=buildstage /go/src/Backend ./
+COPY --from=buildstage /go/src/Frontend ./
 
-RUN chmod +x Backend
+RUN chmod +x Frontend
 
-CMD ["./Backend"] 
+ENTRYPOINT ["./Frontend"] 
