@@ -55,7 +55,7 @@ jobs:
       - name: Push backend image
         if: github.event.inputs.build_and_push_backend == 'true'
         run: |
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.backend_tag}}
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill:${{ github.event.inputs.backend_tag}}
 
       - name: Build frontend image
         if: github.event.inputs.build_and_push_frontend == 'true'
@@ -65,4 +65,4 @@ jobs:
       - name: Push frontend image
         if: github.event.inputs.build_and_push_frontend == 'true'
         run: |
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.frontend_tag}}
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill:${{ github.event.inputs.frontend_tag}}
