@@ -1,0 +1,68 @@
+name: Build and push new images manually when a new change is pushed
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_and_push_backend:
+        description: build and push the backend image to registry
+        required: false
+        type: boolean
+      
+      backend_tag:
+        description: tag of the backend image
+        required: false
+        type: string
+
+      build_and_push_frontend:
+        description: build and push the frontend image to registry
+        required: false
+        type: boolean
+
+      frontrnd_tag:
+        description: tag of the frontend image
+        required: false
+        type: string
+      ref:
+        description: 'Git ref to a branch/tag/hash'
+        required: true
+        type: string
+
+env: 
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: "${{ github.event.inputs.ref }}"
+      
+      - name: Login into github registry
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build backend image
+        if: github.event.inputs.build_and_push_backend == 'true'
+        run: |
+          docker build --tag ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.backend_tag}}
+
+      - name: Push backend image
+        if: github.event.inputs.build_and_push_backend == 'true'
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.backend_tag}}
+
+      - name: Build frontend image
+        if: github.event.inputs.build_and_push_frontend == 'true'
+        run: |
+          docker build --tag ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.frontend_tag}}
+
+      - name: Push frontend image
+        if: github.event.inputs.build_and_push_frontend == 'true'
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/k8s-final-drill::${{ github.event.inputs.frontend_tag}}
