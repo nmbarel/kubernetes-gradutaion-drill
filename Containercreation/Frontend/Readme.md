@@ -1,22 +1,19 @@
 # Frontend
 
-## Build
-
-run the following:
+## Create image 
+Run the following:
 ```
-CGO_ENABLED=0 && go build .
-```
-
-## create container 
-run the following:
-```
-docker build -t theog75/drillfrontend:v1
+docker build -t <YOUR_NAME>/k8s-final-drill:frontend .
 ```
 
+Or use the existing image in 
+```
+ghcr.io/expruc/kubernetes-gradutaion-drill/k8s-final-drill:frontend
+```
 
 ## Running the container
 
-The Backend container requires 2 environment variable named
+The Frontend container requires 2 environment variable named
 ```
 PORT
 BACKENDURL
