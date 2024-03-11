@@ -21,7 +21,7 @@ func mainpage(w http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		fmt.Fprintf(w, "%v", "<div style='width:500px;position:relative;display: block;margin: 20px auto;'><h1>Welcome to K8s Graduation drill</h1></div>")
-		fmt.Fprintf(w, "%v", "<div style='animation: blinker 1s linear infinite;width:500px;text-align:center;position:relative;display: block;color: red;margin: 20px auto;'>BackEnd is not working</div>")
+		fmt.Fprintf(w, "%v", "<div style='animation: blinker 1s linear infinite;width:500px;text-align:center;position:relative;display: block;color: red;margin: 20px auto;'>Backend is not working</div>")
 	}
 	if err != nil {
 		fmt.Printf("Error %s", err)
@@ -33,9 +33,9 @@ func mainpage(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "%v", "<div style='width:500px;position:relative;display: block;margin: 20px auto;'><h1>Welcome to K8s Graduation drill</h1></div>")
 	fmt.Println(string(body))
 	if string(body) == "OK" {
-		fmt.Fprintf(w, "%v", "<div style='width:500px;text-align:center;position:relative;display: block;color: green;margin: 20px auto;'>BackEnd is is operationl</div>")
+		fmt.Fprintf(w, "%v", "<div style='width:500px;text-align:center;position:relative;display: block;color: green;margin: 20px auto;'>Backend is operational</div>")
 	} else {
-		fmt.Fprintf(w, "%v", "<div style='animation: blinker 1s linear infinite;width:500px;text-align:center;position:relative;display: block;color: red;margin: 20px auto;'>BackEnd is not working</div>")
+		fmt.Fprintf(w, "%v", "<div style='animation: blinker 1s linear infinite;width:500px;text-align:center;position:relative;display: block;color: red;margin: 20px auto;'>Backend is not working</div>")
 	}
 	fmt.Println("Main page accessed!")
 }
